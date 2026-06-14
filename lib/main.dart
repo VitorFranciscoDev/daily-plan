@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:daily_plan/entities/database/database.dart'; 
-import 'package:daily_plan/presentation/task/task_screen.dart';
+import 'package:daily_plan/presentation/task/list/task_screen.dart';
+import 'global.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final database = DailyPlanDatabase(); 
+  initialize();
 
-  runApp(DailyPlanApp(database: database));
+  runApp(const DailyPlanApp());
 }
 
 class DailyPlanApp extends StatelessWidget {
-  const DailyPlanApp({super.key, required this.database});
-
-  final DailyPlanDatabase database;
+  const DailyPlanApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'DailyPlan',
-      home: TaskScreen(database: database), 
+      home: TaskScreen(),
     );
   }
 }

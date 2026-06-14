@@ -4,14 +4,12 @@ import 'package:daily_plan/entities/entity_task.dart';
 
 import '../task.dart';
 
-TaskService newTaskService(DailyPlanDatabase database) {
-  return _TaskService(database);
+TaskService newTaskService() {
+  return _TaskService();
 }
 
 class _TaskService implements TaskService {
-  const _TaskService(this._database);
-
-  final DailyPlanDatabase _database;
+  final _database = DailyPlanDatabase();
 
   @override
   Future<void> createNewTask(Task task) async {

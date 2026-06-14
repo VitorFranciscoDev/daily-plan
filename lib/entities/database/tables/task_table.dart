@@ -15,14 +15,18 @@ class TaskTable {
   /// The "is_done" field
   static const String columnIsDone = 'is_done';
 
+  /// The "created_at" field
+  static const String columnCreatedAt = 'created_at';
+
   /// Creates the "tasks" table
   static String createTaskTable() {
     return '''
       CREATE TABLE $tableName (
-        $columnID INTEGER PRIMARY KEY AUTOINCREMENT,
-        $columnTitle TEXT NOT NULL,
+        $columnID          INTEGER PRIMARY KEY AUTOINCREMENT,
+        $columnTitle       TEXT     NOT NULL,
         $columnDescription TEXT,
-        $columnIsDone INTEGER NOT NULL DEFAULT 0
+        $columnIsDone      INTEGER  NOT NULL DEFAULT 0,
+        $columnCreatedAt   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
       );
     ''';
   }
