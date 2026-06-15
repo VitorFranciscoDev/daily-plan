@@ -23,12 +23,13 @@ class _TaskService implements TaskService {
   }
   
   @override
-  Future<List<Task>?> listTaskByDate(DateTime date) async {
+  Future<List<Task>?> listTaskByDate(DateTime dateTime) async {
+    String date="${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
     try {
          final db = await _database.database;
         final List<Map<String,dynamic>> data=await db.query(
           "tasks",
-          where: "due_date=?",
+          where: "date(due_date)=?",
           whereArgs: [date],
         );
       return data.map((map) => Task.fromMap(map)).toList();

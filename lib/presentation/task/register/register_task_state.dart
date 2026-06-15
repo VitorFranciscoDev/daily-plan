@@ -8,11 +8,11 @@ enum TaskDateSelection { today, tomorrow }
 class CreateTaskState with ChangeNotifier {
   CreateTaskState();
 
-  TextEditingController controllerTitle = TextEditingController();
-  TextEditingController controllerDescription = TextEditingController();
+  final TextEditingController controllerTitle = TextEditingController();
+  final TextEditingController controllerDescription = TextEditingController();
   TaskDateSelection dateSelection = TaskDateSelection.today;
   bool isLoading = false;
-  DateTime dueDate = DateTime.now().add(Duration(hours: 1));
+  DateTime dueDate = DateTime.now().add(const Duration(hours: 1));
 
   void updateDueDate(DateTime value) {
     dueDate = value;
@@ -20,20 +20,20 @@ class CreateTaskState with ChangeNotifier {
   }
 
   Future<bool> saveTask() async {
+
+    if (isLoading) return false; 
+
     isLoading = true;
     notifyListeners();
 
     try {
       final task = Task(
-        title: controllerTitle.text,
-        description: controllerDescription.text,
-        createdAt: dateSelection == TaskDateSelection.today
-            ? DateTime.now()
-            : DateTime.now().add(const Duration(days: 1)),
+        title: controllerTitle.text.trim(), 
+        description: controllerDescription.text.trim(),
+        createdAt:DateTime.now(),
         isDone: false,
         dueDate: dueDate,
       );
-
       await taskService.createNewTask(task);
       return true;
     } catch (_) {
@@ -42,5 +42,11 @@ class CreateTaskState with ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+  @override
+  void dispose() {
+    controllerTitle.dispose();
+    controllerDescription.dispose();
+    super.dispose();
   }
 }
