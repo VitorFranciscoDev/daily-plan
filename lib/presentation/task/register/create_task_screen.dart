@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'create_task_state.dart';
@@ -9,13 +10,36 @@ class CreateTaskScreen extends StatefulWidget {
   State<CreateTaskScreen> createState() => _CreateTaskScreenState();
 }
 
+void _showCupertinoTimePicker(BuildContext context, CreateTaskState state) {
+  showCupertinoModalPopup(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: 250,
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        child: SafeArea(
+          top: false,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.time,
+            initialDateTime: state.dueDate,
+            use24hFormat: true,
+            onDateTimeChanged: (DateTime newDateTime) {
+              state.updateDueDate(newDateTime);
+            },
+          ),
+        ),
+      );
+    },
+  );
+}
+
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.close, color: Colors.black),
@@ -31,35 +55,54 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               children: [
                 const Text(
                   'New Task',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
-                const SizedBox(height: 20),
-
-                Row(
-                  children: [
-                    _buildSelectionChip(
-                      label: 'Today',
-                      isSelected: state.dateSelection == TaskDateSelection.today,
-                      onTap: () => state.setDateSelection(TaskDateSelection.today),
-                    ),
-                    const SizedBox(width: 12),
-                    _buildSelectionChip(
-                      label: 'Tomorrow',
-                      isSelected: state.dateSelection == TaskDateSelection.tomorrow,
-                      onTap: () => state.setDateSelection(TaskDateSelection.tomorrow),
-                    ),
-                  ],
+                const SizedBox(height: 18),
+          Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        decoration: BoxDecoration(
+          color:  Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color:  Theme.of(context).primaryColor),
+        ),
+        child: Text(
+          "Today",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+            const SizedBox(height: 24),
+                const Text(
+                  'TITLE',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                const SizedBox(height: 24),
-                const Text('TITLE', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),
                 TextField(
                   onChanged: state.updateTitle,
                   decoration: InputDecoration(
                     hintText: 'Buy rice',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade300)),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade300)),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -67,15 +110,78 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   onChanged: state.updateDescription,
                   decoration: InputDecoration(
                     hintText: 'Description (optional)',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade300)),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey.shade300)),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
                   ),
                 ),
-                
-                const Spacer(),
+                const SizedBox(height: 12),
+                const Text(
+                  'TIME',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _showCupertinoTimePicker(context, state),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade200),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          CupertinoIcons.clock,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 22,
+                        ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'Set Time',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          "${state.dueDate.hour}:${state.dueDate.minute}",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Icon(
+                          CupertinoIcons.chevron_right,
+                          color: Colors.grey.shade400,
+                          size: 16,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
 
-                // Botão de Criar
+                const Spacer(),
                 SizedBox(
                   width: double.infinity,
                   height: 56,
@@ -89,12 +195,21 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                             }
                           },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+                      backgroundColor:  Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                     child: state.isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text('Create', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                        : const Text(
+                            'Create',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -102,27 +217,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildSelectionChip({required String label, required bool isSelected, required VoidCallback onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.black : Colors.white,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: isSelected ? Colors.black : Colors.grey.shade300),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
       ),
     );
   }

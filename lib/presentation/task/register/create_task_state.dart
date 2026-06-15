@@ -12,6 +12,7 @@ class CreateTaskState with ChangeNotifier {
   String description = '';
   TaskDateSelection dateSelection = TaskDateSelection.today;
   bool isLoading = false;
+  DateTime dueDate= DateTime.now().add(Duration(hours: 1));
 
   void updateTitle(String value) {
     title = value;
@@ -23,6 +24,10 @@ class CreateTaskState with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateDueDate(DateTime value){
+    dueDate=value;
+    notifyListeners();
+  }
   void setDateSelection(TaskDateSelection selection) {
     dateSelection = selection;
     notifyListeners();
@@ -44,6 +49,7 @@ class CreateTaskState with ChangeNotifier {
             ? DateTime.now()
             : DateTime.now().add(const Duration(days: 1)),
         isDone: false,
+        dueDate: dueDate,
       );
 
       await taskService.createNewTask(task);
