@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'create_task_state.dart';
+import 'register_task_state.dart';
 
 class CreateTaskScreen extends StatefulWidget {
   const CreateTaskScreen({super.key});
@@ -62,22 +62,25 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   ),
                 ),
                 const SizedBox(height: 18),
-          Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        decoration: BoxDecoration(
-          color:  Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color:  Theme.of(context).primaryColor),
-        ),
-        child: Text(
-          "Today",
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-            const SizedBox(height: 24),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(color: Theme.of(context).primaryColor),
+                  ),
+                  child: Text(
+                    "Today",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
                 const Text(
                   'TITLE',
                   style: TextStyle(
@@ -195,7 +198,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                             }
                           },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:  Theme.of(context).primaryColor,
+                      backgroundColor: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),

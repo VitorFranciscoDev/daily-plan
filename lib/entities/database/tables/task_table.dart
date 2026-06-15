@@ -18,6 +18,9 @@ class TaskTable {
   /// The "created_at" field
   static const String columnCreatedAt = 'created_at';
 
+  /// The "due_date" field
+  static const String columnDueDate = 'due_date';
+
   /// Creates the "tasks" table
   static String createTaskTable() {
     return '''
@@ -26,7 +29,8 @@ class TaskTable {
         $columnTitle       TEXT     NOT NULL,
         $columnDescription TEXT,
         $columnIsDone      INTEGER  NOT NULL DEFAULT 0,
-        $columnCreatedAt   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        $columnCreatedAt   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        $columnDueDate     DATETIME NOT NULL, 
       );
     ''';
   }

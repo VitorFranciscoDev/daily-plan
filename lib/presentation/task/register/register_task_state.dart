@@ -12,7 +12,7 @@ class CreateTaskState with ChangeNotifier {
   String description = '';
   TaskDateSelection dateSelection = TaskDateSelection.today;
   bool isLoading = false;
-  DateTime dueDate= DateTime.now().add(Duration(hours: 1));
+  DateTime dueDate = DateTime.now().add(Duration(hours: 1));
 
   void updateTitle(String value) {
     title = value;
@@ -24,20 +24,17 @@ class CreateTaskState with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateDueDate(DateTime value){
-    dueDate=value;
+  void updateDueDate(DateTime value) {
+    dueDate = value;
     notifyListeners();
   }
+
   void setDateSelection(TaskDateSelection selection) {
     dateSelection = selection;
     notifyListeners();
   }
 
   Future<bool> saveTask() async {
-    if (title.trim().isEmpty) {
-      return false;
-    }
-
     isLoading = true;
     notifyListeners();
 
@@ -53,14 +50,12 @@ class CreateTaskState with ChangeNotifier {
       );
 
       await taskService.createNewTask(task);
-
-      isLoading = false;
-      notifyListeners();
       return true;
-    } catch (e) {
+    } catch (_) {
+      return false;
+    } finally {
       isLoading = false;
       notifyListeners();
-      return false;
     }
   }
 }

@@ -9,7 +9,7 @@ final class Task {
     required this.title,
     this.description,
     required this.isDone,
-    required this.createdAt,
+    this.createdAt,
     required this.dueDate,
   });
 
@@ -26,7 +26,7 @@ final class Task {
   final bool isDone;
 
   /// Date of the creation of the task
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   /// Date of the limit for do the task
   final DateTime dueDate;
@@ -39,7 +39,7 @@ final class Task {
       'description': description,
       'isDone': isDone ? 1 : 0,
       'created_at': createdAt,
-      'due_date':dueDate,
+      'due_date': dueDate,
     };
   }
 }

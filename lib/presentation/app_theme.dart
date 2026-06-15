@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Represents the light theme for the application
 final lightTheme = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: const Color(0xFFF5F5F5),
@@ -16,6 +17,7 @@ final lightTheme = ThemeData(
   ),
 );
 
+/// Represents the dark theme for the application
 final darkTheme = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: const Color(0xFF121212),

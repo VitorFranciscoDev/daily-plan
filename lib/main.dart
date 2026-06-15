@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:daily_plan/presentation/task/list/task_screen.dart';
 import 'global.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   initialize();
@@ -21,7 +21,7 @@ class DailyPlanApp extends StatelessWidget {
       title: 'DailyPlan',
       theme: lightTheme, 
       darkTheme: darkTheme, 
-      themeMode: ThemeMode.system,
+      themeMode: .system,
       home: TaskScreen(),
     );
   }

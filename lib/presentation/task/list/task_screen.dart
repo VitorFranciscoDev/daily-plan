@@ -1,6 +1,6 @@
 import 'package:daily_plan/entities/database/database.dart';
-import 'package:daily_plan/presentation/task/register/create_task_screen.dart';
-import 'package:daily_plan/presentation/task/register/create_task_state.dart';
+import 'package:daily_plan/presentation/task/register/register_task_screen.dart';
+import 'package:daily_plan/presentation/task/register/register_task_state.dart';
 import 'package:daily_plan/services/impl/task_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
