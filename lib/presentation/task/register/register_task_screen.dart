@@ -36,13 +36,16 @@ void _showCupertinoTimePicker(BuildContext context, CreateTaskState state) {
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: theme.scaffoldBackgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: Colors.black),
+          icon: Icon(Icons.close, color: theme.colorScheme.onSurface),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -53,12 +56,12 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'New Task',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: theme.colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 18),
@@ -68,122 +71,128 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    color: theme.colorScheme.primary,
                     borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Theme.of(context).primaryColor),
                   ),
                   child: Text(
                     "Today",
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: theme.colorScheme.onPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
+                Text(
                   'TITLE',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey,
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
                 TextField(
-                  onChanged: state.updateTitle,
+                  controller: state.controllerTitle,
+                  style: TextStyle(color: theme.colorScheme.onSurface),
                   decoration: InputDecoration(
                     hintText: 'Buy rice',
+                    hintStyle: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)),
+                    filled: true,
+                    fillColor: theme.colorScheme.surface,
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 16,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
                     ),
                   ),
                 ),
                 const SizedBox(height: 12),
                 TextField(
-                  onChanged: state.updateDescription,
+                  controller: state.controllerDescription,
+                  style: TextStyle(color: theme.colorScheme.onSurface),
                   decoration: InputDecoration(
                     hintText: 'Description (optional)',
+                    hintStyle: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)),
+                    filled: true,
+                    fillColor: theme.colorScheme.surface,
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 16,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                      borderSide: BorderSide(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                const Text(
+                const SizedBox(height: 24),
+                Text(
                   'TIME',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey,
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 GestureDetector(
                   onTap: () => _showCupertinoTimePicker(context, state),
                   child: Container(
-                    margin: const EdgeInsets.only(top: 16),
+                    margin: const EdgeInsets.only(top: 8),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 14,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: theme.colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey.shade200),
+                      border: Border.all(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
                     ),
                     child: Row(
                       children: [
                         Icon(
                           CupertinoIcons.clock,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: theme.colorScheme.primary,
                           size: 22,
                         ),
                         const SizedBox(width: 12),
-                        const Text(
+                        Text(
                           'Set Time',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Colors.black87,
+                            color: theme.colorScheme.onSurface,
                           ),
                         ),
                         const Spacer(),
                         Text(
-                          "${state.dueDate.hour}:${state.dueDate.minute}",
+                          "${state.dueDate.hour.toString().padLeft(2, '0')}:${state.dueDate.minute.toString().padLeft(2, '0')}",
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey.shade500,
+                            color: theme.colorScheme.onSurface,
                           ),
                         ),
                         const SizedBox(width: 4),
                         Icon(
                           CupertinoIcons.chevron_right,
-                          color: Colors.grey.shade400,
+                          color: theme.colorScheme.onSurface.withOpacity(0.4),
                           size: 16,
                         ),
                       ],
                     ),
                   ),
                 ),
-
                 const Spacer(),
                 SizedBox(
                   width: double.infinity,
@@ -198,17 +207,18 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                             }
                           },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
+                      backgroundColor: isDark ? theme.colorScheme.primary : Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
+                      elevation: 0,
                     ),
                     child: state.isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text(
+                        : Text(
                             'Create',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: isDark ? theme.colorScheme.onPrimary : Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),

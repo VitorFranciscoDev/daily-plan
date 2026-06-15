@@ -16,7 +16,10 @@ class TaskScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "Daily Plan",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
         actions: [
           IconButton(
@@ -31,7 +34,10 @@ class TaskScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(CupertinoIcons.add),
+            icon: Icon(
+              CupertinoIcons.add,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
         ],
       ),
