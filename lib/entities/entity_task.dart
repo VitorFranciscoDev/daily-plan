@@ -9,6 +9,8 @@ final class Task {
     required this.title,
     this.description,
     required this.isDone,
+    this.createdAt,
+    required this.dueDate,
   });
 
   /// Unique identifier of the entity
@@ -23,13 +25,21 @@ final class Task {
   /// Defines if the task is done or not
   final bool isDone;
 
+  /// Date of the creation of the task
+  final DateTime? createdAt;
+
+  /// Date of the limit for do the task
+  final DateTime dueDate;
+
   /// Transforms a [Task] in a JSON
   Map<String, dynamic> toJSON() {
     return {
       'id': id,
       'title': title,
       'description': description,
-      'isDone': isDone ? 1 : 0
+      'isDone': isDone ? 1 : 0,
+      'created_at': createdAt,
+      'due_date': dueDate,
     };
   }
 }
