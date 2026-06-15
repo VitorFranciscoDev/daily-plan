@@ -42,4 +42,18 @@ final class Task {
       'due_date': dueDate,
     };
   }
+
+  /// Transforms a JSON in a [Task]
+  factory Task.fromMap(Map<String, dynamic> map) {
+    return Task(
+      id: map['id'] as int?,
+      title: map['title'] as String,
+      description: map['description'] as String?,
+      isDone: map['isDone'] == 1,
+      createdAt: map['createdAt'] != null
+          ? DateTime.parse(map['createdAt'] as String)
+          : null,
+      dueDate: DateTime.parse(map['dueDate'] as String),
+    );
+  }
 }

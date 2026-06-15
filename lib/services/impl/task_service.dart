@@ -21,4 +21,21 @@ class _TaskService implements TaskService {
       rethrow;
     }
   }
+  
+  @override
+  Future<List<Task>?> listTaskByDate(DateTime date) async {
+    try {
+         final db = await _database.database;
+        final List<Map<String,dynamic>> data=await db.query(
+          "tasks",
+          where: "due_date=?",
+          whereArgs: [date],
+        );
+      return data.map((map) => Task.fromMap(map)).toList();
+    } on Exception catch (_) {
+       rethrow;
+    }
+  }
+
+  
 }
