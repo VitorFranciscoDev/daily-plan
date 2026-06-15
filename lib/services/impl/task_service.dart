@@ -37,6 +37,23 @@ class _TaskService implements TaskService {
        rethrow;
     }
   }
+  
+  @override
+  Future<void> updateTaskStatus(int taskId,bool isDone) async{
+   try {
+      final db = await _database.database;
+      await db.update(
+      "tasks",
+      {
+        'is_done': isDone ? 1 : 0,
+      },
+      where: "id = ?",
+      whereArgs: [taskId],
+    );
+  } catch (_) {
+    rethrow;
+  }
+  }
 
   
 }

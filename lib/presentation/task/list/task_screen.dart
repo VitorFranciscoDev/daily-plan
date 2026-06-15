@@ -1,3 +1,4 @@
+import 'package:daily_plan/presentation/components/task_container.dart';
 import 'package:daily_plan/presentation/task/list/task_state.dart';
 import 'package:daily_plan/presentation/task/register/register_task_screen.dart';
 import 'package:daily_plan/presentation/task/register/register_task_state.dart';
@@ -24,7 +25,9 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           "Daily Plan",
           style: TextStyle(
@@ -69,25 +72,46 @@ class _TaskScreenState extends State<TaskScreen> {
             return Center(
               child: Text(
                 "No tasks for today!",
-                style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
             );
           }
-          return ListView.builder(
-            itemCount: state.tasks!.length,
-            itemBuilder: (context, index) {
-              final task = state.tasks![index];
-              return ListTile(
-                title: Text(task.title),
-                subtitle: Text(task.description ?? 'Sem descrição'),
-                trailing: Icon(
-                  task.isDone
-                      ? Icons.check_box
-                      : Icons.check_box_outline_blank,
-                  color: task.isDone ? Colors.green : null,
+          return Column(
+            children: [
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  SizedBox(width: 12),
+                  Text(
+                    "Today's tasks",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: state.tasks!.length,
+                  itemBuilder: (context, index) {
+                    final task = state.tasks![index];
+                    return TaskContainer(
+                      theme: Theme.of(context),
+                      task: task,
+                      onToggleStatus: () async {
+                        await state.updateTaskStatus(task.id!, !task.isDone);
+                        state.fetchTasksByDate();
+                      },
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ],
           );
         },
       ),

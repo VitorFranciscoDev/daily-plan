@@ -7,4 +7,7 @@ abstract class TaskService {
 
   /// Lists all the tasks from the given date
   Future<List<Task>?> listTaskByDate(DateTime date);
+
+  /// Update the isDone from the given task
+  Future<void> updateTaskStatus(int taskId,bool isDone);
 }

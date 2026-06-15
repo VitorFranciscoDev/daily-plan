@@ -21,4 +21,8 @@ Future<void> fetchTasksByDate() async {
     isLoading=false;
     notifyListeners();
   }
+
+Future<void> updateTaskStatus(int taskId,bool isDone) async{
+await taskService.updateTaskStatus(taskId, isDone);
+}
 }
