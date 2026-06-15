@@ -37,7 +37,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -106,11 +105,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
+                      borderSide: BorderSide(color: theme.colorScheme.onSecondary),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
+                      borderSide: BorderSide(color: theme.colorScheme.onSecondary),
                     ),
                   ),
                 ),
@@ -129,11 +128,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
+                      borderSide: BorderSide(color: theme.colorScheme.onSecondary),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
+                      borderSide: BorderSide(color: theme.colorScheme.onSecondary),
                     ),
                   ),
                 ),
@@ -157,7 +156,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     decoration: BoxDecoration(
                       color: theme.colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
+                      border: Border.all(color:theme.colorScheme.onSecondary),
                     ),
                     child: Row(
                       children: [
@@ -207,7 +206,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                             }
                           },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: isDark ? theme.colorScheme.primary : Colors.black,
+                      backgroundColor: theme.colorScheme.primary ,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -218,7 +217,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         : Text(
                             'Create',
                             style: TextStyle(
-                              color: isDark ? theme.colorScheme.onPrimary : Colors.white,
+                              color:  theme.colorScheme.onPrimary,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
