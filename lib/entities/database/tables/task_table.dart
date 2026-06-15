@@ -30,7 +30,7 @@ class TaskTable {
         $columnDescription TEXT,
         $columnIsDone      INTEGER  NOT NULL DEFAULT 0,
         $columnCreatedAt   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        $columnDueDate     DATETIME NOT NULL, 
+        $columnDueDate     DATETIME NOT NULL
       );
     ''';
   }
