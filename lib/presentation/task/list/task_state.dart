@@ -6,7 +6,9 @@ class TaskState with ChangeNotifier {
 TaskState();
 
 List<Task>? tasks = [];
-  bool isLoading = true;
+List<Task> done=[];
+List<Task> todo=[];
+   bool isLoading = true;
   String errorMessage = '';
 
 Future<void> fetchTasksByDate() async {

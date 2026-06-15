@@ -4,6 +4,7 @@ import 'package:daily_plan/presentation/task/register/register_task_screen.dart'
 import 'package:daily_plan/presentation/task/register/register_task_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String date = DateFormat('EEEE, d MMMM').format(DateTime.now());
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -84,12 +86,25 @@ class _TaskScreenState extends State<TaskScreen> {
               Row(
                 children: [
                   SizedBox(width: 12),
+
                   Text(
                     "Today's tasks",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 28,
                       color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  SizedBox(width: 12),
+                  Text(
+                    date,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
                 ],
