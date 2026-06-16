@@ -30,7 +30,7 @@ class DailyPlanApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'DailyPlan',
-      theme: darkTheme,
+      theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: .system,
       home: TaskScreen(),

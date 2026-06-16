@@ -104,18 +104,19 @@ class _TaskScreenState extends State<TaskScreen> {
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
-                ],
-              ),
-              SizedBox(height: 8),
-              Row(
-                children: [
-                  SizedBox(width: 12),
+                   SizedBox(width: 12),
                   Text(
                     date,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                 
                 ],
               ),
               SizedBox(height: 10),
