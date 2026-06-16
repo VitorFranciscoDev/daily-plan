@@ -1,4 +1,5 @@
 import 'package:daily_plan/presentation/app_theme.dart';
+import 'package:daily_plan/presentation/home/home_screen.dart';
 import 'package:daily_plan/presentation/task/list/task_state.dart';
 import 'package:daily_plan/presentation/task/register/register_task_state.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +31,10 @@ class DailyPlanApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'DailyPlan',
-      theme: lightTheme,
+      theme: darkTheme,
       darkTheme: darkTheme,
       themeMode: .system,
-      home: TaskScreen(),
+      home: HomeScreen(),
     );
   }
 }
