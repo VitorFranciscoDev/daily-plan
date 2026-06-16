@@ -1,6 +1,8 @@
+import 'package:daily_plan/presentation/home/home_state.dart';
 import 'package:daily_plan/presentation/task/list/task_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,20 +12,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentScreenIndex = 0;
 
-  final List<Widget> _screens = [
-    const TaskScreen(),
-    const Center(child: Text("Calendário")),
-    const Center(child: Text("Configurações")),
-  ];
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(
-      body: IndexedStack(index: _currentScreenIndex, children: _screens),
+    return Consumer<HomeState>(builder: (context, state, child) {
+     return Scaffold(
+      body: IndexedStack(index: state.currentIndex, children: state.screens),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 36.0, right: 36.0, bottom: 24.0),
         child: Container(
@@ -42,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _currentScreenIndex == 0
+                state.currentIndex==0
                   ? Container(
                       width: 48,
                       height: 48,
@@ -60,9 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: const Icon(CupertinoIcons.home),
                       color: theme.colorScheme.onSecondary,
                       iconSize: 24,
-                      onPressed: () => setState(() => _currentScreenIndex = 0),
+                      onPressed: () => state.changeIndex(0),
                     ),
-              _currentScreenIndex == 1
+              state.currentIndex == 1
                   ? Container(
                       width: 48,
                       height: 48,
@@ -82,9 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         0.4,
                       ),
                       iconSize: 24,
-                      onPressed: () => setState(() => _currentScreenIndex = 1),
+                      onPressed: () =>  state.changeIndex(1),
                     ),
-              _currentScreenIndex == 2
+              state.currentIndex == 2
                   ? Container(
                       width: 48,
                       height: 48,
@@ -104,12 +101,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         0.4,
                       ),
                       iconSize: 24,
-                      onPressed: () => setState(() => _currentScreenIndex = 2),
+                      onPressed: () => state.changeIndex(2),
                     ),
             ],
           ),
         ),
-      ),
-    );
+      ),);
+    },);
   }
 }
