@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     const TaskScreen(),
     const Center(child: Text("Calendário")),
-    const Center(child: Text("Perfil")),
+    const Center(child: Text("Configurações")),
   ];
 
   @override
@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 72,
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(22),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.06),
