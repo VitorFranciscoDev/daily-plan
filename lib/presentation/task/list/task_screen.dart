@@ -1,4 +1,5 @@
 import 'package:daily_plan/presentation/components/task_container.dart';
+import 'package:daily_plan/presentation/components/task_filter.dart';
 import 'package:daily_plan/presentation/task/list/task_state.dart';
 import 'package:daily_plan/presentation/task/register/register_task_screen.dart';
 import 'package:daily_plan/presentation/task/register/register_task_state.dart';
@@ -46,6 +47,14 @@ class _TaskScreenState extends State<TaskScreen> {
                   builder: (context) => const CreateTaskScreen(),
                 ),
               );
+
+              if (context.mounted) {
+                final taskState = Provider.of<TaskState>(
+                  context,
+                  listen: false,
+                );
+                taskState.fetchTasksByDate();
+              }
             },
             icon: Icon(
               CupertinoIcons.add,
@@ -110,11 +119,38 @@ class _TaskScreenState extends State<TaskScreen> {
                 ],
               ),
               SizedBox(height: 10),
+              Row(
+                children: [
+                  SizedBox(width: 12),
+                  TaskFilterWidget(
+                    theme: Theme.of(context),
+                    currentFilter: state.currentFilter,
+                    countAll: state.tasks!.length,
+                    countTodo: state.todo.length,
+                    countDone: state.done.length,
+                    onToggleFilter: (newFilter) {
+                      state.changeFilter(newFilter);
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
               Expanded(
                 child: ListView.builder(
-                  itemCount: state.tasks!.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: state.currentFilter == TaskFilter.all
+                      ? state.tasks!.length
+                      : state.currentFilter == TaskFilter.todo
+                      ? state.todo.length
+                      : state.done.length,
                   itemBuilder: (context, index) {
-                    final task = state.tasks![index];
+                    final task = state.currentFilter == TaskFilter.all
+                        ? state.tasks![index]
+                        : state.currentFilter == TaskFilter.todo
+                        ? state.todo[index]
+                        : state.done[index];
+
                     return TaskContainer(
                       theme: Theme.of(context),
                       task: task,
