@@ -81,11 +81,23 @@ class _TaskScreenState extends State<TaskScreen> {
 
           if (state.tasks == null || state.tasks!.isEmpty) {
             return Center(
-              child: Text(
-                "No tasks for today!",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
+              child: Column(
+                children: [
+                  Spacer(),
+                  Icon(
+                    CupertinoIcons.tray,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 48,
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    "No tasks for today!",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                  Spacer(),
+                ],
               ),
             );
           }
@@ -104,7 +116,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
-                   SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Text(
                     date,
                     style: TextStyle(
@@ -114,8 +126,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 ],
               ),
               SizedBox(height: 8),
-              Row(
-                children: [
+              Row(children: [
                  
                 ],
               ),
