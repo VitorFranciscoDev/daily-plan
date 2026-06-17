@@ -9,7 +9,7 @@ final class Task {
     required this.title,
     this.description,
     required this.isDone,
-    this.createdAt,
+    required this.createdAt,
     required this.dueDate,
   });
 
@@ -26,7 +26,7 @@ final class Task {
   final bool isDone;
 
   /// Date of the creation of the task
-  final DateTime? createdAt;
+  final DateTime createdAt;
 
   /// Date of the limit for do the task
   final DateTime dueDate;
@@ -37,9 +37,21 @@ final class Task {
       'id': id,
       'title': title,
       'description': description,
-      'isDone': isDone ? 1 : 0,
-      'created_at': createdAt,
-      'due_date': dueDate,
+      'is_done': isDone ? 1 : 0,
+      'created_at': createdAt.toIso8601String(),
+      'due_date': dueDate.toIso8601String(),
     };
+  }
+
+  /// Transforms a JSON in a [Task]
+  factory Task.fromMap(Map<String, dynamic> map) {
+    return Task(
+      id: map['id'] as int?,
+      title: map['title'] as String,
+      description: map['description'] as String?,
+      isDone: map['is_done'] == 1,
+      createdAt: DateTime.parse(map['created_at'] as String),
+      dueDate: DateTime.parse(map['due_date'] as String),
+    );
   }
 }
