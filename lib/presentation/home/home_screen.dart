@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: const Icon(CupertinoIcons.home),
                         color: theme.colorScheme.onSecondary,
                         iconSize: 24,
-                        onPressed: () => state.changeIndex(0),
+                        onPressed: () => state.changeIndex(0,context),
                       ),
                 state.currentIndex == 1
                     ? Container(
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           0.4,
                         ),
                         iconSize: 24,
-                        onPressed: () =>  state.changeIndex(1),
+                        onPressed: () =>  state.changeIndex(1,context),
                       ),
                 state.currentIndex == 2
                     ? Container(
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           0.4,
                         ),
                         iconSize: 24,
-                        onPressed: () => state.changeIndex(2),
+                        onPressed: () => state.changeIndex(2,context),
                       ),
               ],
             ),
