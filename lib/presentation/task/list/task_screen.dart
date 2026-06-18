@@ -2,7 +2,6 @@ import 'package:daily_plan/presentation/components/task_container.dart';
 import 'package:daily_plan/presentation/components/task_filter.dart';
 import 'package:daily_plan/presentation/task/list/task_state.dart';
 import 'package:daily_plan/presentation/task/register/register_task_screen.dart';
-import 'package:daily_plan/presentation/task/register/register_task_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -86,7 +85,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   Spacer(),
                   Icon(
                     CupertinoIcons.tray,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onSecondary,
                     size: 48,
                   ),
                   SizedBox(height: 12),

@@ -1,4 +1,6 @@
 import 'package:daily_plan/presentation/app_theme.dart';
+import 'package:daily_plan/presentation/calendar/calendar_state.dart';
+import 'package:daily_plan/presentation/calendar/register/create_task_state.dart';
 import 'package:daily_plan/presentation/home/home_screen.dart';
 import 'package:daily_plan/presentation/home/home_state.dart';
 import 'package:daily_plan/presentation/task/list/task_state.dart';
@@ -17,7 +19,9 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => TaskState()),
         ChangeNotifierProvider(create: (context) => CreateTaskState()),
-        ChangeNotifierProvider(create: (context) => HomeState(),)
+        ChangeNotifierProvider(create: (context) => HomeState(),),
+        ChangeNotifierProvider(create: (context) => CalendarState(),),
+        ChangeNotifierProvider(create: (context) => CreateOtherTasksState(),)
       ],
       child: DailyPlanApp(),
     ),
