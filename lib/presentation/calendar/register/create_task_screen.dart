@@ -1,16 +1,16 @@
+import 'package:daily_plan/presentation/calendar/register/create_task_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'register_task_state.dart';
 
-class CreateTaskScreen extends StatefulWidget {
-  const CreateTaskScreen({super.key});
+class CreateOtherTaskScreen extends StatefulWidget {
+  const CreateOtherTaskScreen({super.key});
 
   @override
-  State<CreateTaskScreen> createState() => _CreateTaskScreenState();
+  State<CreateOtherTaskScreen> createState() => _CreateTaskScreenState();
 }
 
-void _showCupertinoTimePicker(BuildContext context, CreateTaskState state) {
+void _showCupertinoTimePicker(BuildContext context, CreateOtherTasksState state) {
   showCupertinoModalPopup(
     context: context,
     builder: (BuildContext context) {
@@ -33,12 +33,12 @@ void _showCupertinoTimePicker(BuildContext context, CreateTaskState state) {
   );
 }
 
-class _CreateTaskScreenState extends State<CreateTaskScreen> {
+class _CreateTaskScreenState extends State<CreateOtherTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Consumer<CreateTaskState>(
+    return Consumer<CreateOtherTasksState>(
       builder: (context, state, child) {
         return Scaffold(
           backgroundColor: theme.scaffoldBackgroundColor,
@@ -50,6 +50,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               onPressed: () => Navigator.pop(context),
             ),
           ),
+          // Corpo apenas com os campos roláveis
           body: SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -97,9 +98,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     style: TextStyle(color: theme.colorScheme.onSurface),
                     decoration: InputDecoration(
                       hintText: 'Buy rice',
-                      hintStyle: TextStyle(
-                        color: theme.colorScheme.onSurface.withOpacity(0.4),
-                      ),
+                      hintStyle: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)),
                       filled: true,
                       fillColor: theme.colorScheme.surface,
                       contentPadding: const EdgeInsets.symmetric(
@@ -108,15 +107,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: theme.colorScheme.onSecondary,
-                        ),
+                        borderSide: BorderSide(color: theme.colorScheme.onSecondary),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: theme.colorScheme.onSecondary,
-                        ),
+                        borderSide: BorderSide(color: theme.colorScheme.onSecondary),
                       ),
                     ),
                   ),
@@ -126,9 +121,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     style: TextStyle(color: theme.colorScheme.onSurface),
                     decoration: InputDecoration(
                       hintText: 'Description (optional)',
-                      hintStyle: TextStyle(
-                        color: theme.colorScheme.onSurface.withOpacity(0.4),
-                      ),
+                      hintStyle: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.4)),
                       filled: true,
                       fillColor: theme.colorScheme.surface,
                       contentPadding: const EdgeInsets.symmetric(
@@ -137,15 +130,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: theme.colorScheme.onSecondary,
-                        ),
+                        borderSide: BorderSide(color: theme.colorScheme.onSecondary),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: theme.colorScheme.onSecondary,
-                        ),
+                        borderSide: BorderSide(color: theme.colorScheme.onSecondary),
                       ),
                     ),
                   ),
@@ -169,9 +158,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       decoration: BoxDecoration(
                         color: theme.colorScheme.surface,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: theme.colorScheme.onSecondary,
-                        ),
+                        border: Border.all(color: theme.colorScheme.onSecondary),
                       ),
                       child: Row(
                         children: [
@@ -214,11 +201,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           ),
           bottomNavigationBar: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.only(
-                left: 24.0,
-                right: 24.0,
-                bottom: 24.0,
-              ),
+              padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 24.0),
               child: SizedBox(
                 width: double.infinity,
                 height: 56,
@@ -226,7 +209,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   onPressed: state.isLoading
                       ? null
                       : () async {
-                          FocusScope.of(context).unfocus();
+                        FocusScope.of(context).unfocus();
                           final success = await state.saveTask();
                           if (success && context.mounted) {
                             Navigator.pop(context);

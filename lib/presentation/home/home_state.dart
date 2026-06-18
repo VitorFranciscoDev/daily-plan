@@ -1,3 +1,4 @@
+import 'package:daily_plan/presentation/calendar/calendar_screen.dart';
 import 'package:daily_plan/presentation/task/list/task_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class HomeState extends ChangeNotifier{
   }
     final List<Widget> screens = [
     const TaskScreen(),
-    const Center(child: Text("Calendário")),
+    const CalendarScreen(),
     const Center(child: Text("Configurações")),
   ];
 }
