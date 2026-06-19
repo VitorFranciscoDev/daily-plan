@@ -10,4 +10,5 @@ late final NotificationService notificationService;
 Future<void> initialize() async {
   taskService = newTaskService();
   notificationService = newNotificationService();
+  await notificationService.init();
 }

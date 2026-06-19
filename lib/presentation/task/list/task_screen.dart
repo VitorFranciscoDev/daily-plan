@@ -149,7 +149,6 @@ class _TaskScreenState extends State<TaskScreen> {
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: state.currentFilter == TaskFilter.all
                       ? state.tasks!.length
                       : state.currentFilter == TaskFilter.todo

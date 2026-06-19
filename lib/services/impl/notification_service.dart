@@ -11,14 +11,28 @@ class _NotificationService implements NotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  // Função auxiliar para garantir que o fuso horário está pronto
+  void _ensureTimeZonesInitialized() {
+    try {
+      tz.initializeTimeZones();
+      // Tenta ler o local atual, se falhar (der o LateInitializationError), ele cai no catch e define
+      tz.local; 
+    } catch (_) {
+      tz.setLocalLocation(tz.getLocation('America/Sao_Paulo'));
+    }
+  }
+
   @override
   Future<void> init() async {
-    tz.initializeTimeZones();
+    _ensureTimeZonesInitialized();
+
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
+        
     const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
-        await requestPermissions();
+        
+    await requestPermissions();
     await _notificationsPlugin.initialize(initializationSettings);
   }
 
@@ -28,6 +42,9 @@ class _NotificationService implements NotificationService {
     required String title,
     required DateTime scheduledTime,
   }) async {
+    // Garante a inicialização do fuso horário novamente antes do agendamento
+    _ensureTimeZonesInitialized();
+
     final tz.TZDateTime tzScheduledTime = tz.TZDateTime.from(
       scheduledTime,
       tz.local,
@@ -37,10 +54,12 @@ class _NotificationService implements NotificationService {
 
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
-          'task_channel',
-          'Lembretes de Tarefas',
+          'task_channel_v2',
+          'Lembretes de Tarefas importantes',
+          icon: '@mipmap/ic_launcher',
           importance: Importance.max,
           priority: Priority.high,
+          playSound: true,
         );
 
     await _notificationsPlugin.zonedSchedule(
@@ -51,15 +70,12 @@ class _NotificationService implements NotificationService {
       const NotificationDetails(android: androidDetails),
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    );
+androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,    );
   }
 
   static Future<void> requestPermissions() async {
-    final FlutterLocalNotificationsPlugin notificationsPlugin =
-        FlutterLocalNotificationsPlugin();
     final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-        notificationsPlugin
+        _notificationsPlugin
             .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin
             >();
@@ -68,5 +84,29 @@ class _NotificationService implements NotificationService {
       await androidImplementation.requestNotificationsPermission();
       await androidImplementation.requestExactAlarmsPermission();
     }
+  }
+
+  @override
+  Future<void> showInstantNotification({
+    required int id,
+    required String title,
+    required String body,
+  }) async {
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'task_channel_v3',
+          'Lembretes de Tarefas',
+          icon: '@mipmap/ic_launcher',
+          importance: Importance.max,
+          priority: Priority.high,
+          playSound: true,
+        );
+
+    await _notificationsPlugin.show(
+      id,
+      title,
+      body,
+      const NotificationDetails(android: androidDetails),
+    );
   }
 }

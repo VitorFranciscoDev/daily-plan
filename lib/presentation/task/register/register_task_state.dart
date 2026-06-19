@@ -4,7 +4,6 @@ import 'package:daily_plan/entities/entity_task.dart';
 import '../../../global.dart';
 
 enum TaskDateSelection { today, tomorrow }
-
 class CreateTaskState with ChangeNotifier {
   CreateTaskState();
 
@@ -40,18 +39,16 @@ class CreateTaskState with ChangeNotifier {
       title: task.title,
       scheduledTime: task.dueDate.subtract(const Duration(minutes: 10)),
     );
+      controllerTitle.clear();
+      controllerDescription.clear();
       return true;
-    } catch (_) {
+    } catch (e) {
       return false;
     } finally {
+      controllerTitle.clear();
+      controllerDescription.clear();
       isLoading = false;
       notifyListeners();
     }
-  }
-  @override
-  void dispose() {
-    controllerTitle.dispose();
-    controllerDescription.dispose();
-    super.dispose();
   }
 }
