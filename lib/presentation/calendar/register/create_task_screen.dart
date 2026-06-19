@@ -33,6 +33,36 @@ void _showCupertinoTimePicker(BuildContext context, CreateOtherTasksState state)
   );
 }
 
+void _showCupertinoDatePicker(BuildContext context, CreateOtherTasksState state) {
+  showCupertinoModalPopup(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: 300,
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        child: SafeArea(
+          top: false,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: state.dueDate,
+            onDateTimeChanged: (DateTime newDate) {
+              // Preserve the previously selected time when changing the date
+              final updated = DateTime(
+                newDate.year,
+                newDate.month,
+                newDate.day,
+                state.dueDate.hour,
+                state.dueDate.minute,
+              );
+              state.updateDueDate(updated);
+            },
+          ),
+        ),
+      );
+    },
+  );
+}
+
 class _CreateTaskScreenState extends State<CreateOtherTaskScreen> {
   @override
   Widget build(BuildContext context) {
@@ -63,24 +93,6 @@ class _CreateTaskScreenState extends State<CreateOtherTaskScreen> {
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                       color: theme.colorScheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.primary,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: Text(
-                      "Today",
-                      style: TextStyle(
-                        color: theme.colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
-                      ),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -179,6 +191,62 @@ class _CreateTaskScreenState extends State<CreateOtherTaskScreen> {
                           const Spacer(),
                           Text(
                             "${state.dueDate.hour.toString().padLeft(2, '0')}:${state.dueDate.minute.toString().padLeft(2, '0')}",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: theme.colorScheme.onSurface,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(
+                            CupertinoIcons.chevron_right,
+                            color: theme.colorScheme.onSurface.withOpacity(0.4),
+                            size: 16,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'DATE',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _showCupertinoDatePicker(context, state),
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surface,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: theme.colorScheme.onSecondary),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.calendar,
+                            color: theme.colorScheme.primary,
+                            size: 22,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'Set Date',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: theme.colorScheme.onSurface,
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            "${state.dueDate.day.toString().padLeft(2, '0')}/${state.dueDate.month.toString().padLeft(2, '0')}/${state.dueDate.year}",
                             style: TextStyle(
                               fontSize: 14,
                               color: theme.colorScheme.onSurface,

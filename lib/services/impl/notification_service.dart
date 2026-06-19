@@ -18,6 +18,7 @@ class _NotificationService implements NotificationService {
         AndroidInitializationSettings('@mipmap/ic_launcher');
     const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
+        await requestPermissions();
     await _notificationsPlugin.initialize(initializationSettings);
   }
 
@@ -27,16 +28,20 @@ class _NotificationService implements NotificationService {
     required String title,
     required DateTime scheduledTime,
   }) async {
-    final tz.TZDateTime tzScheduledTime = tz.TZDateTime.from(scheduledTime, tz.local);
+    final tz.TZDateTime tzScheduledTime = tz.TZDateTime.from(
+      scheduledTime,
+      tz.local,
+    );
 
     if (tzScheduledTime.isBefore(tz.TZDateTime.now(tz.local))) return;
 
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'task_channel',
-      'Lembretes de Tarefas',
-      importance: Importance.max,
-      priority: Priority.high,
-    );
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'task_channel',
+          'Lembretes de Tarefas',
+          importance: Importance.max,
+          priority: Priority.high,
+        );
 
     await _notificationsPlugin.zonedSchedule(
       id,
@@ -48,5 +53,20 @@ class _NotificationService implements NotificationService {
           UILocalNotificationDateInterpretation.absoluteTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
+  }
+
+  static Future<void> requestPermissions() async {
+    final FlutterLocalNotificationsPlugin notificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+        notificationsPlugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >();
+
+    if (androidImplementation != null) {
+      await androidImplementation.requestNotificationsPermission();
+      await androidImplementation.requestExactAlarmsPermission();
+    }
   }
 }
