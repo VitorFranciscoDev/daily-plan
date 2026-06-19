@@ -34,7 +34,12 @@ class CreateTaskState with ChangeNotifier {
         isDone: false,
         dueDate: dueDate,
       );
-      await taskService.createNewTask(task);
+    int id=  await taskService.createNewTask(task);
+      await notificationService.scheduleNotification(
+      id: id,
+      title: task.title,
+      scheduledTime: task.dueDate.subtract(const Duration(minutes: 10)),
+    );
       return true;
     } catch (_) {
       return false;

@@ -12,7 +12,7 @@ import 'global.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  initialize();
+  await initialize();
 
   runApp(
     MultiProvider(
