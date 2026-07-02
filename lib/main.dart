@@ -1,3 +1,4 @@
+import 'package:daily_plan/presentation/app_state.dart';
 import 'package:daily_plan/presentation/app_theme.dart';
 import 'package:daily_plan/presentation/calendar/calendar_state.dart';
 import 'package:daily_plan/presentation/calendar/register/create_task_state.dart';
@@ -12,18 +13,21 @@ import 'global.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  initialize();
+  await initialize();
+  final appState = AppState();
+  await appState.loadAppearancePreferences();
 
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(value: appState),
         ChangeNotifierProvider(create: (context) => TaskState()),
         ChangeNotifierProvider(create: (context) => CreateTaskState()),
-        ChangeNotifierProvider(create: (context) => HomeState(),),
-        ChangeNotifierProvider(create: (context) => CalendarState(),),
-        ChangeNotifierProvider(create: (context) => CreateOtherTasksState(),)
+        ChangeNotifierProvider(create: (context) => HomeState()),
+        ChangeNotifierProvider(create: (context) => CalendarState()),
+        ChangeNotifierProvider(create: (context) => CreateOtherTasksState()),
       ],
-      child: DailyPlanApp(),
+      child: const DailyPlanApp(),
     ),
   );
 }
@@ -33,13 +37,17 @@ class DailyPlanApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'DailyPlan',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: .system,
-      home: HomeScreen(),
+    return Consumer<AppState>(
+      builder: (context, state, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'DailyPlan',
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: state.themeMode,
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }

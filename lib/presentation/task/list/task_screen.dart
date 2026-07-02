@@ -1,7 +1,10 @@
+import 'package:daily_plan/presentation/components/minimal_task_container.dart';
 import 'package:daily_plan/presentation/components/task_container.dart';
 import 'package:daily_plan/presentation/components/task_filter.dart';
+import 'package:daily_plan/presentation/app_state.dart';
 import 'package:daily_plan/presentation/task/list/task_state.dart';
 import 'package:daily_plan/presentation/task/register/register_task_screen.dart';
+import 'package:daily_plan/services/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +29,8 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   Widget build(BuildContext context) {
     String date = DateFormat('EEEE, d MMMM').format(DateTime.now());
+    final taskContainerLayout = context.watch<AppState>().taskContainerLayout;
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -149,7 +154,6 @@ class _TaskScreenState extends State<TaskScreen> {
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: state.currentFilter == TaskFilter.all
                       ? state.tasks!.length
                       : state.currentFilter == TaskFilter.todo
@@ -162,13 +166,23 @@ class _TaskScreenState extends State<TaskScreen> {
                         ? state.todo[index]
                         : state.done[index];
 
-                    return TaskContainer(
+                    final onToggleStatus = () async {
+                      await state.updateTaskStatus(task.id!, !task.isDone);
+                      state.fetchTasksByDate();
+                    };
+
+                    if (taskContainerLayout == TaskContainerLayout.normal) {
+                      return TaskContainer(
+                        theme: Theme.of(context),
+                        task: task,
+                        onToggleStatus: onToggleStatus,
+                      );
+                    }
+
+                    return MinimalTaskContainer(
                       theme: Theme.of(context),
                       task: task,
-                      onToggleStatus: () async {
-                        await state.updateTaskStatus(task.id!, !task.isDone);
-                        state.fetchTasksByDate();
-                      },
+                      onToggleStatus: onToggleStatus,
                     );
                   },
                 ),

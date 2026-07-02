@@ -12,11 +12,12 @@ class _TaskService implements TaskService {
   final _database = DailyPlanDatabase();
 
   @override
-  Future<void> createNewTask(Task task) async {
+  Future<int> createNewTask(Task task) async {
     try {
       final db = await _database.database;
 
-      await db.insert(TaskTable.tableName, task.toJSON());
+     int id= await db.insert(TaskTable.tableName, task.toJSON());
+     return id;
     } on Exception catch (_) {
       rethrow;
     }

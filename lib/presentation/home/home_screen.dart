@@ -1,5 +1,4 @@
 import 'package:daily_plan/presentation/home/home_state.dart';
-import 'package:daily_plan/presentation/task/list/task_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
