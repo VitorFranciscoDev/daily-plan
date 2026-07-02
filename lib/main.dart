@@ -15,7 +15,7 @@ Future<void> main() async {
 
   await initialize();
   final appState = AppState();
-  await appState.loadThemeMode();
+  await appState.loadAppearancePreferences();
 
   runApp(
     MultiProvider(
